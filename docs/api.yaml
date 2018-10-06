@@ -1,0 +1,229 @@
+openapi: 3.0.0
+info:
+  title: Flask API Quickstart
+  description: API documentation
+  version: 0.0.1
+paths:
+  /ping:
+    get:
+      summary: Health endpoint
+      tags:
+        - app
+      responses:
+        "200":
+          description: Application is running
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: running
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /protected:
+    get:
+      summary: Sample auth-protected endpoint
+      tags:
+        - app
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Example
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Protected message
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  "/api/v1/auth/signup":
+    post:
+      summary: Sign up/create user account
+      tags:
+        - auth
+      requestBody:
+        description: Signup parameters (all required)
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  minLength: 5
+                  format: https://pypi.org/project/python-usernames/
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 8
+              example:
+                username: username1
+                email: mail@example.com
+                password: Password1
+      responses:
+        "200":
+          description: User created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntityError"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  "/api/v1/auth/login":
+    post:
+      summary: Log in/issue auth token
+      tags:
+        - auth
+      requestBody:
+        description: Login parameters (all required)
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  minLength: 5
+                  format: https://pypi.org/project/python-usernames/
+                password:
+                  type: string
+                  minLength: 8
+              example:
+                username: username1
+                password: Password1
+      responses:
+        "200":
+          description: Token issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "401":
+          $ref: "#/components/responses/InvalidCredentialsError"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  "/api/v1/auth/logout":
+    post:
+      summary: Log out/invalidate auth token
+      tags:
+        - auth
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Token invalidated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "500":
+          $ref: "#/components/responses/InternalError"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    BadRequestError:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error_code:
+                type: string
+                enum: [BAD_REQUEST]
+                example: BAD_REQUEST
+              error_message:
+                type: string
+                example: XXX field is missing.
+    InvalidCredentialsError:
+      description: Username or password is wrong
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error_code:
+                type: string
+                enum: [INVALID_CREDENTIALS]
+                example: INVALID_CREDENTIALS
+              error_message:
+                type: string
+                example: Invalid username or password.
+    UnauthorizedError:
+      description: Access token is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error_code:
+                type: string
+                enum: [INVALID_TOKEN, TOKEN_EXPIRED]
+                example: INVALID_TOKEN
+              error_message:
+                type: string
+                example: Token is invalid or missing.
+    UnprocessableEntityError:
+      description: Unprocessable entity/Validation error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error_code:
+                type: string
+                enum: [UNPROCESSABLE_ENTITY, INVALID_FIELD]
+                example: INVALID_FIELD
+              error_message:
+                type: string
+                example: Invalid 'username'. Username contains forbidden characters or is a reserved word.
+    InternalError:
+      description: Internal application error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error_code:
+                type: string
+                enum: [INTERNAL_ERROR]
+                example: INTERNAL_ERROR
+              error_message:
+                type: string
+                example: Request cannot be processed at the moment.
