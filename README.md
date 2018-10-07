@@ -1,4 +1,4 @@
-# Flask API Quickstart with Json Web Tokens, SQLAlchemy and Pytest
+# Flask API Quickstart with JSON Web Tokens, SQLAlchemy and Pytest
 
 This is a quick-start application that demonstrates how to create secured API applications using Flask and JWT. It is built with:
 
@@ -9,7 +9,7 @@ This is a quick-start application that demonstrates how to create secured API ap
 - [Flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/)
 - [Pytest](https://docs.pytest.org/)
 
-I wrote an article about creating the quickstart: [Flask API Quickstart Application with Json Web Tokens, SQLAlchemy and Pytest](https://stribny.name/blog/2018/10/flask-api-quickstart-application-with-json-web-tokens-sqlalchemy-and-pytest).
+I wrote an article about creating the quickstart: [Flask API Quickstart Application with JSON Web Tokens, SQLAlchemy and Pytest](https://stribny.name/blog/2018/10/flask-api-quickstart-application-with-json-web-tokens-sqlalchemy-and-pytest).
 
 ## Requirements
 
