@@ -9,7 +9,7 @@ This is a quick-start application that demonstrates how to create secured API ap
 - [Flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/)
 - [Pytest](https://docs.pytest.org/)
 
-I wrote an article about creating the quickstart: [TODO]().
+I wrote an article about creating the quickstart: [Flask API Quickstart Application with Json Web Tokens, SQLAlchemy and Pytest](https://stribny.name/blog/2018/10/flask-api-quickstart-application-with-json-web-tokens-sqlalchemy-and-pytest).
 
 ## Requirements
 
