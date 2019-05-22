@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 2c239329c039
+Revision ID: 0e24da9edb9e
 Revises: 
-Create Date: 2018-10-05 18:20:14.646932
+Create Date: 2019-05-22 15:25:27.700665
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2c239329c039'
+revision = '0e24da9edb9e'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,7 +21,7 @@ def upgrade():
     op.create_table('blacklist_token',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('token', sa.String(length=256), nullable=True),
-    sa.Column('blacklisted_on', sa.DateTime(), nullable=False),
+    sa.Column('blacklisted_on', sa.DateTime(timezone=True), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user',
@@ -29,7 +29,7 @@ def upgrade():
     sa.Column('username', sa.String(length=80), nullable=True),
     sa.Column('email', sa.String(length=254), nullable=False),
     sa.Column('password', sa.String(length=256), nullable=False),
-    sa.Column('created_on', sa.DateTime(), nullable=False),
+    sa.Column('created_on', sa.DateTime(timezone=True), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')

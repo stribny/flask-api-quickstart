@@ -1,5 +1,4 @@
 import datetime
-
 import bcrypt
 import jwt
 from usernames import is_safe_username
@@ -13,6 +12,7 @@ from app.auth.exceptions import (
 )
 from app.exceptions import InvalidFieldError
 from app.models import BlacklistToken, User
+from app.utils import now
 
 ENCODING = "utf-8"
 
@@ -45,7 +45,7 @@ def create_user(username, email, password):
         raise InvalidFieldError("username", "Username is already used.")
 
     hashed_password = hash_password(password)
-    user = User(username, email, hashed_password, datetime.datetime.utcnow())
+    user = User(username, email, hashed_password, now())
     db.session.add(user)
     db.session.commit()
 
@@ -72,10 +72,10 @@ def encode_auth_token(user_id):
     """Create a token with user_id and expiration date using secret key"""
     exp_days = app.config.get("AUTH_TOKEN_EXPIRATION_DAYS")
     exp_seconds = app.config.get("AUTH_TOKEN_EXPIRATION_SECONDS")
-    exp_date = datetime.datetime.utcnow() + datetime.timedelta(
+    exp_date = now() + datetime.timedelta(
         days=exp_days, seconds=exp_seconds
     )
-    payload = {"exp": exp_date, "iat": datetime.datetime.utcnow(), "sub": user_id}
+    payload = {"exp": exp_date, "iat": now(), "sub": user_id}
     return jwt.encode(payload, app.config["SECRET_KEY"], algorithm="HS256").decode(
         ENCODING
     )
@@ -93,7 +93,7 @@ def decode_auth_token(token):
 
 
 def blacklist_token(token):
-    bl_token = BlacklistToken(token, datetime.datetime.utcnow())
+    bl_token = BlacklistToken(token, now())
     db.session.add(bl_token)
     db.session.commit()
 

@@ -6,7 +6,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(254), unique=True, nullable=False)
     password = db.Column(db.String(256), unique=False, nullable=False)
-    created_on = db.Column(db.DateTime, nullable=False)
+    created_on = db.Column(db.DateTime(timezone=True), nullable=False)
 
     def __init__(self, username, email, password, created_on):
         self.username = username
@@ -21,7 +21,7 @@ class User(db.Model):
 class BlacklistToken(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     token = db.Column(db.String(256))
-    blacklisted_on = db.Column(db.DateTime, nullable=False)
+    blacklisted_on = db.Column(db.DateTime(timezone=True), nullable=False)
 
     def __init__(self, token, blacklisted_on):
         self.token = token

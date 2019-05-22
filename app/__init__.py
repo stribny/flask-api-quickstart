@@ -18,6 +18,7 @@ app.register_blueprint(auth_api, url_prefix="/api/v1/auth")
 
 from app.auth.helpers import auth_required
 
+from app.models import User, BlacklistToken
 
 @app.route("/ping")
 def index():
