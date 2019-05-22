@@ -164,11 +164,11 @@ components:
           schema:
             type: object
             properties:
-              error_code:
+              errorCode:
                 type: string
                 enum: [BAD_REQUEST]
                 example: BAD_REQUEST
-              error_message:
+              errorMessage:
                 type: string
                 example: XXX field is missing.
     InvalidCredentialsError:
@@ -178,11 +178,11 @@ components:
           schema:
             type: object
             properties:
-              error_code:
+              errorCode:
                 type: string
                 enum: [INVALID_CREDENTIALS]
                 example: INVALID_CREDENTIALS
-              error_message:
+              errorMessage:
                 type: string
                 example: Invalid username or password.
     UnauthorizedError:
@@ -192,11 +192,11 @@ components:
           schema:
             type: object
             properties:
-              error_code:
+              errorCode:
                 type: string
                 enum: [INVALID_TOKEN, TOKEN_EXPIRED]
                 example: INVALID_TOKEN
-              error_message:
+              errorMessage:
                 type: string
                 example: Token is invalid or missing.
     UnprocessableEntityError:
@@ -206,11 +206,11 @@ components:
           schema:
             type: object
             properties:
-              error_code:
+              errorCode:
                 type: string
                 enum: [UNPROCESSABLE_ENTITY, INVALID_FIELD]
                 example: INVALID_FIELD
-              error_message:
+              errorMessage:
                 type: string
                 example: Invalid 'username'. Username contains forbidden characters or is a reserved word.
     InternalError:
@@ -220,10 +220,10 @@ components:
           schema:
             type: object
             properties:
-              error_code:
+              errorCode:
                 type: string
                 enum: [INTERNAL_ERROR]
                 example: INTERNAL_ERROR
-              error_message:
+              errorMessage:
                 type: string
                 example: Request cannot be processed at the moment.

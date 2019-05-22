@@ -50,24 +50,24 @@ def assert_error(response, error_code):
 def assert_error_invalid_token(response):
     assert_error(response, 401)
     data = json.loads(response.data)
-    assert data["error_code"] == "INVALID_TOKEN"
+    assert data["errorCode"] == "INVALID_TOKEN"
 
 
 def assert_error_token_expired(response):
     assert_error(response, 401)
     data = json.loads(response.data)
-    assert data["error_code"] == "TOKEN_EXPIRED"
+    assert data["errorCode"] == "TOKEN_EXPIRED"
 
 
 def assert_error_missing_field(response, field):
     assert_error(response, 400)
     data = json.loads(response.data)
-    assert data["error_code"] == "BAD_REQUEST"
-    assert field in data["error_message"]
+    assert data["errorCode"] == "BAD_REQUEST"
+    assert field in data["errorMessage"]
 
 
 def assert_error_invalid_field(response, field):
     assert_error(response, 422)
     data = json.loads(response.data)
-    assert data["error_code"] == "INVALID_FIELD"
-    assert field in data["error_message"]
+    assert data["errorCode"] == "INVALID_FIELD"
+    assert field in data["errorMessage"]

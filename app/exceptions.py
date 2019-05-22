@@ -19,7 +19,7 @@ class AppError(Exception):
 
     def to_api_response(self):
         response = jsonify(
-            {"error_code": self.error_code, "error_message": self.message}
+            {"errorCode": self.error_code, "errorMessage": self.message}
         )
         response.status_code = self.status_code
         return response

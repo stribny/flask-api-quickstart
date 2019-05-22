@@ -90,8 +90,8 @@ def test_signup_username_already_used(client):
     )
     assert_error(response, 422)
     data = json.loads(response.data)
-    assert data["error_code"] == "INVALID_FIELD"
-    assert "Username is already used" in data["error_message"]
+    assert data["errorCode"] == "INVALID_FIELD"
+    assert "Username is already used" in data["errorMessage"]
 
 
 def test_signup_email_already_used(client):
@@ -103,8 +103,8 @@ def test_signup_email_already_used(client):
     )
     assert_error(response, 422)
     data = json.loads(response.data)
-    assert data["error_code"] == "INVALID_FIELD"
-    assert "Email address is already used" in data["error_message"]
+    assert data["errorCode"] == "INVALID_FIELD"
+    assert "Email address is already used" in data["errorMessage"]
 
 
 def test_login_success(client):
@@ -126,7 +126,7 @@ def test_login_bad_credentials(client):
     response = login_user(client=client, username=username, password="Password2")
     assert_error(response, 401)
     data = json.loads(response.data)
-    assert data["error_code"] == "INVALID_CREDENTIALS"
+    assert data["errorCode"] == "INVALID_CREDENTIALS"
     assert not "token" in data
 
 
